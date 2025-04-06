@@ -1,0 +1,78 @@
+<div class="card page-content">
+    <div class="main-content">
+        <div class="flex justify-center items-center gap-4 mb-4">
+            <p-button
+                severity="{{ getButtonSeverity('all') }}"
+                label="All"
+                (click)="getDoctorsList('all')"
+            />
+            <p-button
+                severity="{{ getButtonSeverity('approved') }}"
+                label="Approved"
+                (click)="getDoctorsList('approved')"
+            />
+            <p-button
+                severity="{{ getButtonSeverity('pending') }}"
+                label="Pending"
+                (click)="getDoctorsList('pending')"
+            />
+            <p-button severity="primary" label=" + Add User" />
+        </div>
+        <p-table
+            [value]="doctors"
+            [paginator]="true"
+            [rows]="5"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            [rowsPerPageOptions]="rowsPerPageOptions"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 20%">Name</th>
+                    <th style="width: 20%">Email</th>
+                    <th style="width: 20%">Speciality</th>
+                    <th style="width: 15%">Approved</th>
+                    <th style="width: 15%">Active</th>
+                    <th style="width: 10%">{{ labelConstants.Actions }}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-doctor>
+                <tr>
+                    <td>
+                        <div class="inline-flex vertical-align-middle">
+                            <img
+                                class="vertical-align-middle"
+                                width="24"
+                                [src]="getDoctorImage(doctor)"
+                                alt="user"
+                            />
+                            <p class="ml-1 mt-2">{{ doctor.User.name }}</p>
+                        </div>
+                    </td>
+                    <td>{{ doctor.email }}</td>
+                    <td>{{ doctor.specialty }}</td>
+                    <td>
+                        <p-inputSwitch
+                            [(ngModel)]="doctor.isApproved"
+                            (onChange)="updateDoctorStatus(doctor)"
+                        >
+                        </p-inputSwitch>
+                    </td>
+                    <td>
+                        <p-inputSwitch [(ngModel)]="checked" />
+                    </td>
+                    <td>
+                        <i
+                            class="text-black-alpha-80 text-xl mx-2 pi pi-eye"
+                            [routerLink]="['/doctors/doctor-profile']"
+                            [state]="{ doctorId: doctor.id }"
+                        ></i>
+                        <i
+                            class="text-red-400 text-xl mx-2 pi pi-trash"
+                            (click)="deleteDoctor(doctor.id)"
+                        ></i>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

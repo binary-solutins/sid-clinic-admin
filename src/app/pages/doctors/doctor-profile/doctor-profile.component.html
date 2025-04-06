@@ -1,0 +1,28 @@
+<div class="card page-content">
+    <div class="main-content">
+        <div class="flex align-items-center justify-content-center gap-2">
+            <img
+                class="border-circle"
+                src="https://cdn.pixabay.com/photo/2021/07/02/04/48/user-6380868_1280.png"
+                width="40"
+                height="40"
+                alt="pfp"
+            />
+            <p class="my-0 font-bold text-4xl text-primary">
+                {{ doctor.User.name }}
+            </p>
+            <p class="my-0">{{ doctor.degree }}</p>
+            <p class="my-0">{{ doctor.specialty }}</p>
+            <div *ngIf="doctor.isApproved">
+                <i class="pi pi-check-circle text-primary"></i>
+            </div>
+        </div>
+        <p class="text-xl">Reg No: {{ doctor.registrationNumber }}</p>
+        <p>Conatct No: {{ doctor.User.phone }}</p>
+        <p>Email: {{ doctor.email }}</p>
+        <p>Experience: {{ doctor.yearsOfExperience }}</p>
+        <p>Clinic Name: {{ doctor.clinicName }}</p>
+        <p>Clinic Contact: {{ doctor.clinicContactNumber }}</p>
+        <p>Address: {{ doctor.address }}</p>
+    </div>
+</div>
