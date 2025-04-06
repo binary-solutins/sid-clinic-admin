@@ -38,14 +38,14 @@
             <ng-template pTemplate="body" let-doctor>
                 <tr>
                     <td>
-                        <div class="inline-flex vertical-align-middle">
-                            <img
-                                class="vertical-align-middle"
-                                width="24"
+                        <div class="flex align-items-center">
+                            <img class=""
+                                width="33"
+                                height="33"
                                 [src]="getDoctorImage(doctor)"
                                 alt="user"
                             />
-                            <p class="ml-1 mt-2">{{ doctor.User.name }}</p>
+                            <p class="ml-2">{{ doctor.User.name }}</p>
                         </div>
                     </td>
                     <td>{{ doctor.email }}</td>
@@ -63,8 +63,7 @@
                     <td>
                         <i
                             class="text-black-alpha-80 text-xl mx-2 pi pi-eye"
-                            [routerLink]="['/doctors/doctor-profile']"
-                            [state]="{ doctorId: doctor.id }"
+                            (click)="showDoctorProfile(doctor.id)"
                         ></i>
                         <i
                             class="text-red-400 text-xl mx-2 pi pi-trash"

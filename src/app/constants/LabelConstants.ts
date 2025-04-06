@@ -27,7 +27,7 @@ export const CommonLabelConstants = {
         'Are you sure you want to leave this page? You have unsaved changes.',
     CopyRight: 'Copyright',
     Rights: 'All rights reserved.',
-    MyAccount: 'My Account',
+    MyProfie: 'My Profile',
     OK: 'Ok',
     GoBack: 'Go Back',
     ChangePassword: 'Change Password',
@@ -37,6 +37,7 @@ export const CommonLabelConstants = {
     WelcomeBack: 'Welcome Back!',
     Actions: 'Actions',
     View: 'View',
+    Username: 'Username'
 };
 
 export const AuthLabelConstants = {
@@ -59,11 +60,5 @@ export const ChangePasswordLabelConstants = {
     ConfirmPassword: 'Confirm Password',
 };
 
-export const UserLabelConstants = {
-    AddNew: 'Add User',
-    EditUser: 'Edit User',
-    Contact: 'Contact No',
-    Email: 'User Email',
-    Status: 'Status',
-    Actions: 'Actions',
+export const ProfileLabelConstants = {
 };

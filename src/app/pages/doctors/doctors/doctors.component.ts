@@ -34,6 +34,11 @@ export class DoctorsComponent {
         return this.activeFilter === filter ? 'primary' : 'secondary';
     }
 
+    showDoctorProfile(id: any) {
+        const doctorId = this.commonService.Encrypt(id);
+        this.router.navigate(['/doctors/doctor-profile', doctorId]);
+    }
+
     getDoctorsList(filter: 'all' | 'approved' | 'pending' = 'all') {
         this.activeFilter = filter;
         let api = '';
@@ -93,6 +98,6 @@ export class DoctorsComponent {
     }
 
     deleteDoctor(id: any) {
-        console.log('Delete' + id);
+        
     }
 }

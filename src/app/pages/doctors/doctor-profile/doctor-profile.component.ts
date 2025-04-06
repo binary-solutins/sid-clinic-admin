@@ -17,20 +17,22 @@ export class DoctorProfileComponent implements OnInit {
         private readonly route: ActivatedRoute,
         private readonly api: ApiUrlHelper,
         private readonly router: Router
-    ) {
-        const navigation = this.router.getCurrentNavigation();
-        if (navigation?.extras?.state) {
-            this.id = navigation.extras.state['doctorId'];
-        }
-    }
+    ) {}
 
     ngOnInit(): void {
-        if (this.id) {
-            this.getDoctorProfile();
-        } else {
-            // If no ID is found in state, navigate back to doctors list
-            this.router.navigate(['/doctors']);
-        }
+        this.route.params.subscribe((params) => {
+            const encryptedId = params['id'];
+            if (encryptedId) {
+                this.id = this.commonService.Decrypt(encryptedId);
+                if (this.id) {
+                    this.getDoctorProfile();
+                } else {
+                    this.router.navigate(['/doctors']);
+                }
+            } else {
+                this.router.navigate(['/doctors']);
+            }
+        });
     }
 
     getDoctorProfile() {
@@ -40,7 +42,6 @@ export class DoctorProfileComponent implements OnInit {
             .pipe()
             .subscribe({
                 next: (res) => {
-                    console.log(res.data);
                     this.doctor = res.data;
                 },
                 error: (err: any) => {
