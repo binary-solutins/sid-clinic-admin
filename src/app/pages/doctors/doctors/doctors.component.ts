@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { SpinnerIcon } from 'primeng/icons/spinner';
 import { ApiUrlHelper } from 'src/app/common/api-url-helper';
 import { CommonLabelConstants } from 'src/app/constants/LabelConstants';
 import { IDoctors } from 'src/app/model/commonModel';
@@ -16,18 +18,21 @@ export class DoctorsComponent {
     doctors!: any;
     rowsPerPageOptions: number[] = [5, 10, 25, 100];
     checked: boolean = true;
+    loading: boolean = false;
 
     activeFilter: 'all' | 'approved' | 'pending' = 'all';
 
     constructor(
         private readonly api: ApiUrlHelper,
         private readonly commonService: CommonService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly messageService: MessageService
     ) {}
 
     ngOnInit() {
         this.labelConstants = CommonLabelConstants;
         this.getDoctorsList();
+        this.loading = true;
     }
 
     getButtonSeverity(filter: string): string {
@@ -60,20 +65,22 @@ export class DoctorsComponent {
             .pipe()
             .subscribe({
                 next: (res) => {
-                    this.doctors = res;
-                    console.log(res);
+                    if (res) {
+                        this.loading = false;
+                        this.doctors = res;
+                    } else {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'No data found',
+                        });
+                        this.loading = false;
+                    }
                 },
                 error: (err: any) => {
                     console.log(err);
+                    this.loading = false;
                 },
             });
-    }
-
-    getDoctorImage(doctor: any) {
-        if (doctor.doctorPhoto.trim()) {
-            return doctor.doctorPhoto;
-        }
-        return '../../../../assets/images/user-default.png';
     }
 
     updateDoctorStatus(doctor: any) {
@@ -84,11 +91,16 @@ export class DoctorsComponent {
             .subscribe({
                 next: (res) => {
                     if (res.code == 200) {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: res.message,
+                        });
                         this.getDoctorsList();
-                        console.log(
-                            'Doctor status updated:',
-                            doctor.isApproved
-                        );
+                    } else {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: res.message,
+                        });
                     }
                 },
                 error: (err: any) => {
@@ -97,7 +109,37 @@ export class DoctorsComponent {
             });
     }
 
-    deleteDoctor(id: any) {
-        
+    changeDoctorActiveStatus(doctor: any) {
+        let api = this.api.apiUrl.Doctors.UpdateDoctorActiveStatus(doctor.id);
+        this.commonService
+            .doPut(api, {})
+            .pipe()
+            .subscribe({
+                next: (res) => {
+                    if (res.code == 200) {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: res.message,
+                        });
+                        this.getDoctorsList();
+                    } else {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: res.message,
+                        });
+                    }
+                },
+                error: (err: any) => {
+                    console.log(err);
+                },
+            });
     }
+
+    handleImageError(event: any) {
+        if (event.target.src.indexOf('user-default.png') === -1) {
+            event.target.src = '../../../../assets/images/user-default.png';
+        }
+    }
+
+    deleteDoctor(id: any) {}
 }

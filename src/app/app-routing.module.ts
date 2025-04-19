@@ -58,6 +58,27 @@ import { AuthGuard } from './guard/auth/auth.guard';
                                 ),
                         },
                         {
+                            path: 'blogs',
+                            loadChildren: () =>
+                                import('./pages/blogs/blogs.module').then(
+                                    (m) => m.BlogsModule
+                                ),
+                        },
+                        {
+                            path: 'notifications',
+                            loadChildren: () =>
+                                import(
+                                    './pages/notifications/notifications.module'
+                                ).then((m) => m.NotificationsModule),
+                        },
+                        {
+                            path: 'coupons',
+                            loadChildren: () =>
+                                import('./pages/coupons/coupons.module').then(
+                                    (m) => m.CouponsModule
+                                ),
+                        },
+                        {
                             path: 'profile',
                             component: ProfileComponent,
                         },

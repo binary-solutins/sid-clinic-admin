@@ -1,24 +1,36 @@
+<p-toast></p-toast>
 <div class="card page-content">
     <div class="main-content">
-        <div class="flex justify-center items-center gap-4 mb-4">
-            <p-button
-                severity="{{ getButtonSeverity('all') }}"
-                label="All"
-                (click)="getDoctorsList('all')"
-            />
-            <p-button
-                severity="{{ getButtonSeverity('approved') }}"
-                label="Approved"
-                (click)="getDoctorsList('approved')"
-            />
-            <p-button
-                severity="{{ getButtonSeverity('pending') }}"
-                label="Pending"
-                (click)="getDoctorsList('pending')"
-            />
-            <p-button severity="primary" label=" + Add User" />
+        <div class="sm:flex justify-content-between items-center gap-4 mb-4">
+            <div class="sm:flex gap-4 mb-3 sm:mb-0">
+                <p-button
+                    severity="{{ getButtonSeverity('all') }}"
+                    label="All"
+                    (click)="getDoctorsList('all')"
+                />
+                <p-button
+                    severity="{{ getButtonSeverity('approved') }}"
+                    label="Approved"
+                    (click)="getDoctorsList('approved')"
+                />
+                <p-button
+                    severity="{{ getButtonSeverity('pending') }}"
+                    label="Pending"
+                    (click)="getDoctorsList('pending')"
+                />
+            </div>
+            <div class="">
+                <p-button severity="primary" label=" + Add User" />
+            </div>
         </div>
+
+        <p-progressSpinner
+            *ngIf="loading"
+            styleClass="overlay-spinner"
+        ></p-progressSpinner>
+
         <p-table
+            *ngIf="!loading"
             [value]="doctors"
             [paginator]="true"
             [rows]="5"
@@ -27,11 +39,15 @@
         >
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="width: 20%">Name</th>
-                    <th style="width: 20%">Email</th>
-                    <th style="width: 20%">Speciality</th>
-                    <th style="width: 15%">Approved</th>
-                    <th style="width: 15%">Active</th>
+                    <th style="width: 20%">{{ labelConstants.Name }}</th>
+                    <th style="width: 20%">
+                        {{ labelConstants.Speciality }}
+                    </th>
+                    <th style="width: 20%">{{ labelConstants.City }}</th>
+                    <th style="width: 15%">
+                        {{ labelConstants.Approved }}
+                    </th>
+                    <th style="width: 15%">{{ labelConstants.Active }}</th>
                     <th style="width: 10%">{{ labelConstants.Actions }}</th>
                 </tr>
             </ng-template>
@@ -39,17 +55,19 @@
                 <tr>
                     <td>
                         <div class="flex align-items-center">
-                            <img class=""
+                            <img
+                                class=""
                                 width="33"
                                 height="33"
-                                [src]="getDoctorImage(doctor)"
+                                [src]="doctor.doctorPhoto"
                                 alt="user"
+                                (error)="handleImageError($event)"
                             />
                             <p class="ml-2">{{ doctor.User.name }}</p>
                         </div>
                     </td>
-                    <td>{{ doctor.email }}</td>
                     <td>{{ doctor.specialty }}</td>
+                    <td>{{ doctor.city }}</td>
                     <td>
                         <p-inputSwitch
                             [(ngModel)]="doctor.isApproved"
@@ -58,7 +76,10 @@
                         </p-inputSwitch>
                     </td>
                     <td>
-                        <p-inputSwitch [(ngModel)]="checked" />
+                        <p-inputSwitch
+                            [(ngModel)]="doctor.is_active"
+                            (onChange)="changeDoctorActiveStatus(doctor)"
+                        />
                     </td>
                     <td>
                         <i

@@ -21,6 +21,8 @@ export class ApiUrlHelper {
             GetApprovedDoctors: 'doctors/approved',
             GetPendingDoctors: 'doctors/pending',
             GetDoctorProfile: (id: number | string) => `doctors/details/${id}`,
+            UpdateDoctorActiveStatus: (id: number | string) =>
+                `doctors/toggle-status/${id}`,
         },
     };
 }
