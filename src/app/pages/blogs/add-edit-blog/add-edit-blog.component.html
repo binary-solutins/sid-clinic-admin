@@ -1,7 +1,7 @@
 <p-toast />
 <div class="card page-content">
     <div class="main-content">
-        <form [formGroup]="blogForm" (ngSubmit)="addEditBlog()">
+        <form [formGroup]="blogForm">
             <div class="grid">
                 <div class="col-3 flex flex-column gap-2 mb-3">
                     <label class="text-900 font-medium">
@@ -75,6 +75,7 @@
 
                     <div class="flex gap-3 mt-3">
                         <p-button
+                            (click)="addEditBlog(false)"
                             type="submit"
                             severity="primary"
                             icon="pi pi-send"
@@ -83,6 +84,7 @@
                             type="button"
                             severity="warning"
                             icon="pi pi-bookmark-fill"
+                            (click)="addEditBlog(true)"
                         />
                         <p-button
                             (click)="goBack()"

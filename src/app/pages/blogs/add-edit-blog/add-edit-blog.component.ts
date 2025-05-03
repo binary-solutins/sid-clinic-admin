@@ -125,7 +125,7 @@ export class AddEditBlogComponent implements OnInit {
         this.blogForm.patchValue({ coverImage: null });
     }
 
-    addEditBlog() {
+    addEditBlog(draft: boolean) {
         if (this.blogForm.invalid) {
             this.blogForm.markAllAsTouched();
             this.messageService.add({
@@ -142,7 +142,7 @@ export class AddEditBlogComponent implements OnInit {
         formData.append('content', this.blogForm.value.content);
         formData.append('isFeatured', String(this.blogForm.value.isFeatured));
         formData.append('tags', JSON.stringify(this.blogForm.value.tags));
-        formData.append('status', 'published');
+        formData.append('status', draft ? 'draft' : 'published');
 
         if (this.blogForm.value.coverImage instanceof File) {
             formData.append(
