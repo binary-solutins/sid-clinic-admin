@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { UploadEvent } from 'primeng/fileupload';
 import { ApiUrlHelper } from 'src/app/common/api-url-helper';
-import { BlogLabelConstants } from 'src/app/constants/LabelConstants';
+import { BlogLabelConstants, CommonLabelConstants } from 'src/app/constants/LabelConstants';
 import { CommonService } from 'src/app/services/common/common.service';
 import { SharedService } from 'src/app/services/shared/shared.service';
 
@@ -21,6 +21,7 @@ import { SharedService } from 'src/app/services/shared/shared.service';
 })
 export class AddEditBlogComponent implements OnInit {
     labelConstants: any;
+    commonConstants: any;
     blogForm!: FormGroup;
     id: any;
     blog: any = {}; // Initialize as empty object
@@ -45,6 +46,7 @@ export class AddEditBlogComponent implements OnInit {
     ngOnInit() {
         this.shared.setData('Add Blog');
         this.labelConstants = BlogLabelConstants;
+        this.commonConstants = CommonLabelConstants
         this.initializeBlogForm();
 
         this.route.params.subscribe((params) => {

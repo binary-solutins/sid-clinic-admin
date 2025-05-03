@@ -58,7 +58,7 @@
                         <p-sortIcon field="doctor.name" />
                     </th>
                     <th pSortableColumn="doctor.specialty" style="width: 15%">
-                        {{ labelConstants.Speciality }}
+                        {{ labelConstants.Specialty }}
                         <p-sortIcon field="doctor.specialty" />
                     </th>
                     <th pSortableColumn="doctor.city" style="width: 15%">
@@ -166,7 +166,7 @@
 
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td [colSpan]="5" class="text-center mt-3 text-lg">
+                    <td [colSpan]="6" class="text-center mt-3 text-lg">
                         {{ labelConstants.NoDoctor }}
                     </td>
                 </tr>

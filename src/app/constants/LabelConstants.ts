@@ -1,6 +1,9 @@
 export const DashboardLabelConstants = {
+    TotalUsers:'Total Users',
+    Subscibers: 'Subscribers',
     CustomersCount: 'Customers',
     DoctorsCount: 'Doctors Onboarded',
+    AppointmentNo: 'Appointments Booked'
 };
 
 export const UnderMainatanceLabelConstant = {
@@ -16,7 +19,7 @@ export const CommonLabelConstants = {
     Name: 'Name',
     ContactNo: 'Contact No',
     Email: 'Email',
-    Speciality: 'Speciality',
+    Specialty: 'Specialty',
     City: 'City',
     Approved: 'Approved',
     Active: 'Active',
@@ -44,7 +47,17 @@ export const CommonLabelConstants = {
     View: 'View',
     Username: 'Username',
     NoDoctor: 'No doctors found.',
-    NoUser: 'No users found.'
+    NoUser: 'No users found.',
+    RegistrationNo: 'Registration No',
+    DoctorDetails: 'Doctor Details',
+    ContactDetails: 'Contact Details',
+    ClinicDetails: 'Clinic Details',
+    Experience: 'Experience',
+    ClinicName: 'Clinic Name',
+    ClinicContactNo: 'Clinic Contact No',
+    ClinicAddress: 'Clinic Address',
+    Degree: 'Degree',
+    ViewDegree: 'View Degree',
 };
 
 export const AuthLabelConstants = {

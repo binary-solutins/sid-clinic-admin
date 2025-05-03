@@ -27,7 +27,7 @@ export interface IDoctors {
     clinicName?: string;
     clinicPhotos?: string[];
     yearsOfExperience?: any;
-    speciality?: string;
+    Specialty?: string;
     clinicContactNumber?: string;
     email?: string;
     address?: string;

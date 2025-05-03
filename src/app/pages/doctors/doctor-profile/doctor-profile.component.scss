@@ -1,0 +1,66 @@
+/* Floating legend fieldset */
+:host ::ng-deep .floating-legend-fieldset .p-fieldset-legend {
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-color) !important;
+    padding: 0 0.5rem !important;
+    margin-left: 0.5rem !important;
+    font-size: 1rem !important;
+}
+
+:host ::ng-deep .floating-legend-fieldset .p-fieldset {
+    border: 1px solid #dee2e6 !important;
+    border-radius: 6px !important;
+    padding: 1.25rem !important;
+    position: relative !important;
+}
+
+:host ::ng-deep .floating-legend-fieldset .p-fieldset-legend span {
+    background: var(--surface-a) !important;
+    padding: 0 0.5rem !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Floating legend fieldset - responsive */
+:host ::ng-deep .floating-legend-fieldset .p-fieldset-legend {
+    background: var(--surface-a) !important;
+    padding: 0 0.5rem !important;
+    margin-left: 0.5rem !important;
+    font-size: 0.875rem !important;
+}
+
+:host ::ng-deep .floating-legend-fieldset .p-fieldset {
+    border: 1px solid var(--surface-border) !important;
+    padding: 1.25rem !important;
+    margin-top: 0.5rem !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    :host ::ng-deep .floating-legend-fieldset .p-fieldset {
+        padding: 1rem !important;
+    }
+
+    .page-content {
+        padding: 1rem !important;
+    }
+}
+
+/* Content styling */
+.prose {
+    line-height: 1.6;
+}
+
+.prose :where(p):not(:first-child) {
+    margin-top: 1em;
+}
+
+.prose :where(p):not(:last-child) {
+    margin-bottom: 1em;
+}
+
+:host ::ng-deep .bg-secondary {
+    background-color: var(--gray-200) !important;
+    color: var(--gray-600) !important;
+}

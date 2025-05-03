@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { CardModule } from 'primeng/card';
 import { DoctorsRoutingModule } from './doctors-routing.module';
 import { TableModule } from 'primeng/table';
 import { DoctorsComponent } from './doctors/doctors.component';
@@ -14,7 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TagModule } from 'primeng/tag';
 import { ConfirmationModalComponent } from 'src/app/components/confirmation-modal/confirmation-modal.component';
-
+import { FieldsetModule } from 'primeng/fieldset';
 @NgModule({
     declarations: [
         DoctorsComponent,
@@ -30,7 +30,9 @@ import { ConfirmationModalComponent } from 'src/app/components/confirmation-moda
         InputSwitchModule,
         ToastModule,
         ProgressSpinnerModule,
-        TagModule
+        TagModule,
+        FieldsetModule,
+        CardModule
     ],
     providers: [MessageService]
 })

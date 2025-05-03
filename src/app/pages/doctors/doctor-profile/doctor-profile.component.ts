@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ApiUrlHelper } from 'src/app/common/api-url-helper';
+import { CommonLabelConstants } from 'src/app/constants/LabelConstants';
 import { CommonService } from 'src/app/services/common/common.service';
 import { SharedService } from 'src/app/services/shared/shared.service';
 
@@ -12,8 +13,10 @@ import { SharedService } from 'src/app/services/shared/shared.service';
     styleUrl: './doctor-profile.component.scss',
 })
 export class DoctorProfileComponent implements OnInit {
+    labelConstants: any;
     id: any;
     doctor: any;
+    pfp: any;
 
     constructor(
         private readonly commonService: CommonService,
@@ -26,6 +29,7 @@ export class DoctorProfileComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.labelConstants = CommonLabelConstants;
         this.shared.setData('Doctor Profile');
         const doctorId = window.history.state?.doctorId;
         this.id = this.commonService.Decrypt(doctorId);
@@ -41,6 +45,7 @@ export class DoctorProfileComponent implements OnInit {
                 next: (res) => {
                     if (res.code == 200) {
                         this.doctor = res.data;
+                        this.pfp = res.data.doctorPhoto;
                     } else {
                         this.messageService.add({
                             severity: 'error',
@@ -54,5 +59,9 @@ export class DoctorProfileComponent implements OnInit {
                     this.location.back();
                 },
             });
+    }
+
+    handleImageError($event: any) {
+        this.pfp = '../../../../assets/images/user-default.png'
     }
 }

@@ -3,7 +3,7 @@
     <div class="main-content">
         <form [formGroup]="blogForm">
             <div class="grid">
-                <div class="col-3 flex flex-column gap-2 mb-3">
+                <div class="col-12 md:col-3 mb-3 md:mb-0 flex flex-column gap-2 mb-3">
                     <label class="text-900 font-medium">
                         {{ labelConstants?.CoverImage || "Cover Image" }}
                     </label>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-                <div class="col w-full mt-2">
+                <div class="col-12 md:col w-full mt-2">
                     <div class="flex flex-column gap-1 mb-5">
                         <span class="p-float-label">
                             <input
@@ -151,7 +151,17 @@
                     </div>
 
                     <div class="flex align-items-center gap-3 mb-3">
-                        <label for="isFeatured">Featured</label>
+                        <label for="isFeatured">{{ labelConstants.Featured }}</label>
+                        <p-selectButton
+                            [options]="stateOptions"
+                            formControlName="value"
+                            optionLabel="label"
+                            optionValue="value"
+                        />
+                    </div>
+
+                    <div class="flex align-items-center gap-3 mb-3">
+                        <label for="isFeatured">{{ commonConstants.Active }}</label>
                         <p-selectButton
                             [options]="stateOptions"
                             formControlName="value"

@@ -3,7 +3,13 @@
     <div class="main-content">
         <div class="sm:flex justify-content-between items-center gap-4 mb-4">
             <div class="sm:flex gap-4 mb-3 sm:mb-0"></div>
-            <div class="">
+            <div class="flex gap-3">
+                <p-button
+                    severity="secondary"
+                    label="Import Users"
+                    icon="pi pi-users"
+                    styleClass="rounded-2"
+                />
                 <p-button
                     severity="primary"
                     label="Add User"
@@ -49,6 +55,9 @@
                                 type="text"
                                 field="user.city"
                                 display="menu"
+                                [showOperator]="false"
+                                [showMatchModes]="false"
+                                [showAddButton]="false"
                                 placeholder="Search by city"
                                 class="filter-align-right"
                             ></p-columnFilter>
