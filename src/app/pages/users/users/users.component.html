@@ -1,1 +1,124 @@
-<p>users works!</p>
+<p-toast></p-toast>
+<div class="page-content card">
+    <div class="main-content">
+        <div class="sm:flex justify-content-between items-center gap-4 mb-4">
+            <div class="sm:flex gap-4 mb-3 sm:mb-0"></div>
+            <div class="">
+                <p-button
+                    severity="primary"
+                    label="Add User"
+                    icon="pi pi-plus"
+                    styleClass="rounded-2"
+                />
+            </div>
+        </div>
+
+        <p-progressSpinner
+            *ngIf="loading"
+            styleClass="overlay-spinner"
+        ></p-progressSpinner>
+
+        <p-table
+            *ngIf="!loading"
+            [value]="users"
+            [paginator]="true"
+            [rows]="5"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            [rowsPerPageOptions]="rowsPerPageOptions"
+            styleClass="p-datatable-gridlines"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="user.name" style="width: 20%">
+                        {{ labelConstants.Name }}
+                        <p-sortIcon field="user.name" />
+                    </th>
+                    <th pSortableColumn="user.contactNo" style="width: 20%">
+                        {{ labelConstants.ContactNo }}
+                        <p-sortIcon field="user.contactNo" />
+                    </th>
+                    <th pSortableColumn="user.city" style="width: 20%">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            <div class="flex align-items-center gap-2">
+                                {{ labelConstants.City }}
+                                <p-sortIcon field="user.city" />
+                            </div>
+                            <p-columnFilter
+                                type="text"
+                                field="user.city"
+                                display="menu"
+                                placeholder="Search by city"
+                                class="filter-align-right"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="doctor.is_active" style="width: 15%">
+                        {{ labelConstants.Active }}
+                        <p-sortIcon field="user.is_active" />
+                    </th>
+                    <th style="width: 10%">{{ labelConstants.Actions }}</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-user>
+                <tr>
+                    <td>
+                        <div class="flex align-items-center">
+                            <img
+                                class=""
+                                width="33"
+                                height="33"
+                                [src]="user.userPhoto"
+                                alt="user"
+                                (error)="handleImageError($event)"
+                            />
+                            <p
+                                class="ml-2 font-semibold underline cursor-pointer"
+                                (click)="showUserProfile(user.id)"
+                            >
+                                {{ user.User.name }}
+                            </p>
+                        </div>
+                    </td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.city }}</td>
+                    <td>
+                        <p-tag
+                            value="Active"
+                            severity="user.is_active ? '' : 'bg-secondary'"
+                            [styleClass]="user.is_active ? '' : 'bg-secondary'"
+                            (click)="changeUserActiveStatus(user)"
+                        />
+                        <p-tag
+                            class="ml-1"
+                            severity="user.is_active ? 'bg-secondary' : ''"
+                            value="Suspend"
+                            [styleClass]="user.is_active ? 'bg-secondary' : ''"
+                            (click)="changeUserActiveStatus(user)"
+                        />
+                    </td>
+                    <td>
+                        <i
+                            class="text-black-alpha-80 text-xl mx-2 pi pi-eye"
+                            (click)="showUserProfile(user.id)"
+                        ></i>
+                        <i
+                            class="text-red-400 text-xl mx-2 pi pi-trash"
+                            (click)="deleteUser(user.id)"
+                        ></i>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [colSpan]="5" class="text-center mt-3 text-lg">
+                        {{ labelConstants.NoUser }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

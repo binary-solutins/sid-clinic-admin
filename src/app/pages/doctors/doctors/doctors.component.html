@@ -1,26 +1,39 @@
 <p-toast></p-toast>
 <div class="card page-content">
     <div class="main-content">
-        <div class="sm:flex justify-content-between items-center gap-4 mb-4">
-            <div class="sm:flex gap-4 mb-3 sm:mb-0">
+        <div
+            class="flex flex-column sm:flex-row justify-content-between align-items-stretch gap-3 mb-4"
+        >
+            <!-- Filter Buttons Group -->
+            <div class="flex flex-wrap gap-2 sm:gap-3 mb-2 sm:mb-0">
                 <p-button
                     severity="{{ getButtonSeverity('all') }}"
                     label="All"
                     (click)="getDoctorsList('all')"
+                    styleClass="rounded-2 flex-1 sm:flex-initial"
                 />
                 <p-button
                     severity="{{ getButtonSeverity('approved') }}"
                     label="Approved"
                     (click)="getDoctorsList('approved')"
+                    styleClass="rounded-2 flex-1 sm:flex-initial"
                 />
                 <p-button
                     severity="{{ getButtonSeverity('pending') }}"
                     label="Pending"
                     (click)="getDoctorsList('pending')"
+                    styleClass="rounded-2 flex-1 sm:flex-initial"
                 />
             </div>
-            <div class="">
-                <p-button severity="primary" label=" + Add User" />
+
+            <!-- Add Doctor Button -->
+            <div class="sm:w-auto">
+                <p-button
+                    styleClass="rounded-2"
+                    severity="primary"
+                    label="Add Doctor"
+                    icon="pi pi-plus"
+                />
             </div>
         </div>
 
@@ -36,21 +49,52 @@
             [rows]="5"
             [tableStyle]="{ 'min-width': '50rem' }"
             [rowsPerPageOptions]="rowsPerPageOptions"
+            styleClass="p-datatable-gridlines"
         >
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="width: 20%">{{ labelConstants.Name }}</th>
-                    <th style="width: 20%">
+                    <th pSortableColumn="doctor.name" style="width: 25%">
+                        {{ labelConstants.Name }}
+                        <p-sortIcon field="doctor.name" />
+                    </th>
+                    <th pSortableColumn="doctor.specialty" style="width: 15%">
                         {{ labelConstants.Speciality }}
+                        <p-sortIcon field="doctor.specialty" />
                     </th>
-                    <th style="width: 20%">{{ labelConstants.City }}</th>
-                    <th style="width: 15%">
+                    <th pSortableColumn="doctor.city" style="width: 15%">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            <div class="flex align-items-center gap-2">
+                                {{ labelConstants.City }}
+                                <p-sortIcon field="doctor.city" />
+                            </div>
+                            <p-columnFilter
+                                type="text"
+                                field="doctor.city"
+                                display="menu"
+                                [showOperator]="false"
+                                [showMatchModes]="false"
+                                [showAddButton]="false"
+                                placeholder="Search by city"
+                                class="filter-align-right"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="doctor.isApproved" style="width: 20%">
                         {{ labelConstants.Approved }}
+                        <p-sortIcon field="doctor.isApproved" />
                     </th>
-                    <th style="width: 15%">{{ labelConstants.Active }}</th>
-                    <th style="width: 10%">{{ labelConstants.Actions }}</th>
+                    <th pSortableColumn="doctor.is_active" style="width: 20%">
+                        {{ labelConstants.Active }}
+                        <p-sortIcon field="doctor.is_active" />
+                    </th>
+                    <th style="width: 5%">
+                        {{ labelConstants.Actions }}
+                    </th>
                 </tr>
             </ng-template>
+
             <ng-template pTemplate="body" let-doctor>
                 <tr>
                     <td>
@@ -63,33 +107,67 @@
                                 alt="user"
                                 (error)="handleImageError($event)"
                             />
-                            <p class="ml-2">{{ doctor.User.name }}</p>
+                            <p
+                                class="ml-2 font-semibold underline cursor-pointer"
+                                (click)="showDoctorProfile(doctor.id)"
+                            >
+                                {{ doctor.User.name }}
+                            </p>
                         </div>
                     </td>
                     <td>{{ doctor.specialty }}</td>
                     <td>{{ doctor.city }}</td>
                     <td>
-                        <p-inputSwitch
-                            [(ngModel)]="doctor.isApproved"
-                            (onChange)="updateDoctorStatus(doctor)"
-                        >
-                        </p-inputSwitch>
+                        <p-tag
+                            value="Approved"
+                            severity="doctor.isApproved ? 'primary' : 'secondary'"
+                            (click)="updateDoctorStatus(doctor)"
+                            [styleClass]="
+                                doctor.isApproved ? '' : 'bg-secondary'
+                            "
+                        />
+                        <p-tag
+                            class="ml-1"
+                            value="Pending"
+                            [severity]="doctor.isApproved ? secondary : primary"
+                            [styleClass]="
+                                doctor.isApproved ? 'bg-secondary' : ''
+                            "
+                            (click)="updateDoctorStatus(doctor)"
+                        />
                     </td>
                     <td>
-                        <p-inputSwitch
-                            [(ngModel)]="doctor.is_active"
-                            (onChange)="changeDoctorActiveStatus(doctor)"
+                        <p-tag
+                            value="Active"
+                            severity="doctor.is_active ? '' : 'bg-secondary'"
+                            [styleClass]="
+                                doctor.is_active ? '' : 'bg-secondary'
+                            "
+                            (click)="changeDoctorActiveStatus(doctor)"
+                        />
+                        <p-tag
+                            class="ml-1"
+                            severity="doctor.is_active ? 'bg-secondary' : ''"
+                            value="Suspend"
+                            [styleClass]="
+                                doctor.is_active ? 'bg-secondary' : ''
+                            "
+                            (click)="changeDoctorActiveStatus(doctor)"
                         />
                     </td>
                     <td>
                         <i
-                            class="text-black-alpha-80 text-xl mx-2 pi pi-eye"
-                            (click)="showDoctorProfile(doctor.id)"
-                        ></i>
-                        <i
-                            class="text-red-400 text-xl mx-2 pi pi-trash"
+                            class="text-gray-600 bg-gray-200 border-round-3xl p-2 text-md mx-2 pi pi-trash"
                             (click)="deleteDoctor(doctor.id)"
                         ></i>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [colSpan]="5" class="text-center mt-3 text-lg">
+                        {{ labelConstants.NoDoctor }}
                     </td>
                 </tr>
             </ng-template>

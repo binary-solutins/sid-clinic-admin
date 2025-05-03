@@ -46,15 +46,10 @@ export class AuthGuard {
                 this.router.navigate(['/login']);
                 return false;
             }
-        } else {
-            if (!this.authService.isLoggedIn()) {
-                this.router.navigate(['/login']);
-                return false;
-            }
-            if (!this.authService.isAccessToAdmin()) {
-                this.router.navigate(['/login']);
-                return false;
-            }
+        }
+        if (!this.authService.isAccessToAdmin()) {
+            this.router.navigate(['/login']);
+            return false;
         }
         return true;
     }

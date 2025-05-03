@@ -35,7 +35,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'Doctor Support',
                         icon: 'pi pi-comment',
                         routerLink: ['/doctors-support'],
-                    }
+                    },
                 ],
             },
             {
@@ -54,13 +54,23 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: 'Pages',
+                label: 'Blog',
                 items: [
                     {
                         label: 'Blogs',
                         icon: 'pi pi-pencil',
                         routerLink: ['/blogs'],
                     },
+                    {
+                        label: 'Write Blog',
+                        icon: 'pi pi-plus-circle',
+                        routerLink: ['/blogs/new-blog'],
+                    },
+                ],
+            },
+            {
+                label: 'Pages',
+                items: [
                     {
                         label: 'Notifications',
                         icon: 'pi pi-bell',
@@ -74,8 +84,8 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Images',
                         icon: 'pi pi-images',
-                        routerLink: ['/images']
-                    }
+                        routerLink: ['/images'],
+                    },
                 ],
             },
         ];

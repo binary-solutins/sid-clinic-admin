@@ -6,6 +6,7 @@ import { ApiUrlHelper } from 'src/app/common/api-url-helper';
 import { CommonLabelConstants } from 'src/app/constants/LabelConstants';
 import { IDoctors } from 'src/app/model/commonModel';
 import { CommonService } from 'src/app/services/common/common.service';
+import { SharedService } from 'src/app/services/shared/shared.service';
 
 @Component({
     selector: 'app-doctors',
@@ -15,7 +16,7 @@ import { CommonService } from 'src/app/services/common/common.service';
 })
 export class DoctorsComponent {
     labelConstants: any;
-    doctors!: any;
+    doctors: any = [];
     rowsPerPageOptions: number[] = [5, 10, 25, 100];
     checked: boolean = true;
     loading: boolean = false;
@@ -26,10 +27,12 @@ export class DoctorsComponent {
         private readonly api: ApiUrlHelper,
         private readonly commonService: CommonService,
         private readonly router: Router,
-        private readonly messageService: MessageService
+        private readonly messageService: MessageService,
+        private readonly shared: SharedService
     ) {}
 
     ngOnInit() {
+        this.shared.setData('Doctors');
         this.labelConstants = CommonLabelConstants;
         this.getDoctorsList();
         this.loading = true;
@@ -40,8 +43,11 @@ export class DoctorsComponent {
     }
 
     showDoctorProfile(id: any) {
-        const doctorId = this.commonService.Encrypt(id);
-        this.router.navigate(['/doctors/doctor-profile', doctorId]);
+        this.router.navigate(['/doctors/doctor-profile'], {
+            state: {
+                doctorId: this.commonService.Encrypt(id),
+            },
+        });
     }
 
     getDoctorsList(filter: 'all' | 'approved' | 'pending' = 'all') {
@@ -141,5 +147,7 @@ export class DoctorsComponent {
         }
     }
 
-    deleteDoctor(id: any) {}
+    deleteDoctor(id: any) {
+        
+    }
 }

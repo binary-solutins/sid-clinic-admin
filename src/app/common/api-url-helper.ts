@@ -24,5 +24,19 @@ export class ApiUrlHelper {
             UpdateDoctorActiveStatus: (id: number | string) =>
                 `doctors/toggle-status/${id}`,
         },
+        Users: {
+            GetUsersList: 'users/all',
+        },
+        Blogs: {
+            GetAllBlogs: 'blogs/blogsAdmin',
+            GetActiveBlogs: 'blogs',
+            GetBlogDetails: 'blogs/{id}',
+            EditBlog: 'blogs/{id}',
+            AddNewBlog: 'blogs',
+            UpdateBlogActiveStatus: (id: number | string) =>
+                `blogs/${id}/toggle-status`,
+            UpdateBlogFeaturedStatus: (id: number | string) =>
+                `blogs/${id}/toggle-featured`,
+        },
     };
 }

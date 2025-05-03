@@ -1,0 +1,106 @@
+/* Hide the native file input */
+input[type="file"] {
+    display: none;
+}
+
+/* Style the label as a button */
+/* Custom file upload styles */
+.custom-file-upload {
+    display: block;
+}
+
+.upload-area {
+    position: relative;
+    background-color: var(--surface-card);
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-area.has-preview {
+    padding: 0;
+    border: 1px solid var(--surface-border);
+}
+
+.preview-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.preview-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: var(--border-radius);
+}
+
+.preview-container:hover .preview-overlay {
+    opacity: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+.remove-btn {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom floating label inside the border */
+:host ::ng-deep .p-float-label {
+    position: relative;
+}
+
+:host ::ng-deep .p-float-label label {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    margin-top: 0;
+    transition: all 0.3s ease;
+    color: var(--text-color-secondary);
+    pointer-events: none;
+    background: var(--surface-a);
+    padding: 0 0.5rem;
+}
+
+:host ::ng-deep .p-float-label input:focus ~ label,
+:host ::ng-deep .p-float-label input.p-filled ~ label {
+    top: 0;
+    font-size: 12px;
+    color: var(--primary-color);
+    transform: translateY(-50%) scale(0.9);
+    background: var(--surface-a);
+}
+
+:host ::ng-deep .p-inputtext {
+    padding-top: 1.1rem;
+    padding-bottom: 0.7rem;
+}
+
+:host ::ng-deep .resizable-editor {
+    resize: vertical;
+    overflow: auto;
+    min-height: 120px;
+    border: 1px solid #ced4da !important;
+    border-radius: 6px;
+}
+
+:host ::ng-deep .resizable-editor .p-editor-content {
+    height: 100% !important;
+    min-height: 100px;
+}
+

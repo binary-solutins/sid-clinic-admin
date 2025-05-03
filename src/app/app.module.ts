@@ -21,15 +21,26 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { HTTPListener, HTTPStatus } from './interceptor/HTTPListener';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
-    declarations: [AppComponent, NotfoundComponent, LoginComponent],
+    declarations: [
+        AppComponent,
+        NotfoundComponent,
+        LoginComponent,
+        ForgotPasswordComponent,
+        ConfirmationModalComponent,
+    ],
     imports: [
         AppRoutingModule,
         AppLayoutModule,
         ReactiveFormsModule,
         ToastModule,
+        ConfirmDialogModule,
     ],
+    exports: [ConfirmationModalComponent],
     providers: [
         {
             provide: LocationStrategy,
@@ -39,7 +50,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HTTPListener,
-            multi: true, 
+            multi: true,
         },
         CountryService,
         CustomerService,

@@ -1,0 +1,21 @@
+i {
+    cursor: pointer;
+}
+
+i:hover {
+    color: var(--primary-color) !important;
+    background-color: rgba(100, 181, 246, 0.3) !important;
+}
+
+:host ::ng-deep .bg-secondary {
+    background-color: var(--gray-200) !important;
+    color: var(--gray-600) !important;
+}
+
+:host ::ng-deep .p-tag {
+    cursor: pointer;
+}
+
+:host ::ng-deep .p-tag:hover {
+    opacity: 0.6;
+}

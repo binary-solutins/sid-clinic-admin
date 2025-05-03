@@ -1,6 +1,6 @@
 export const DashboardLabelConstants = {
-  CustomersCount: 'Customers',
-  DoctorsCount: 'Doctors Onboarded',
+    CustomersCount: 'Customers',
+    DoctorsCount: 'Doctors Onboarded',
 };
 
 export const UnderMainatanceLabelConstant = {
@@ -12,6 +12,7 @@ export const UnderMainatanceLabelConstant = {
 
 export const CommonLabelConstants = {
     Add: 'Add',
+    Edit: 'Edit',
     Name: 'Name',
     ContactNo: 'Contact No',
     Email: 'Email',
@@ -41,7 +42,9 @@ export const CommonLabelConstants = {
     WelcomeBack: 'Welcome Back!',
     Actions: 'Actions',
     View: 'View',
-    Username: 'Username'
+    Username: 'Username',
+    NoDoctor: 'No doctors found.',
+    NoUser: 'No users found.'
 };
 
 export const AuthLabelConstants = {
@@ -64,5 +67,18 @@ export const ChangePasswordLabelConstants = {
     ConfirmPassword: 'Confirm Password',
 };
 
-export const ProfileLabelConstants = {
+export const BlogLabelConstants = {
+    Blogs: 'Blogs',
+    Title: 'Title',
+    CoverImage: 'Cover Image',
+    Content: 'Content',
+    Category: 'Category',
+    NoBlog: 'No blogs shared yet. Write and share one please.',
+    Tags: 'Tags',
+    IsFeatured: 'Is Featured',
+    Featured: 'Featured',
+    BlogDetails: 'Blog Details',
+    Author: 'Author'
 };
+
+export const ProfileLabelConstants = {};

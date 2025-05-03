@@ -1,5 +1,13 @@
 <div class="layout-topbar">
-    <a class="layout-topbar-logo" routerLink="">
+    <button
+        #menubutton
+        class="p-link layout-menu-button layout-topbar-button"
+        (click)="layoutService.onMenuToggle()"
+    >
+        <i class="pi pi-bars"></i>
+    </button>
+
+    <a class="layout-topbar-logo" (click)="takeToDashboard()">
         <img
             src="assets/layout/images/{{
                 layoutService.config().colorScheme === 'light'
@@ -10,14 +18,6 @@
         />
         <span>SID Clinic</span>
     </a>
-
-    <button
-        #menubutton
-        class="p-link layout-menu-button layout-topbar-button"
-        (click)="layoutService.onMenuToggle()"
-    >
-        <i class="pi pi-bars"></i>
-    </button>
 
     <button
         #topbarmenubutton
@@ -35,7 +35,7 @@
                 layoutService.state.profileSidebarVisible
         }"
     >
-        <button class="p-link layout-topbar-button" routerLink="/profile">
+        <button class="p-link layout-topbar-button" (click)="myProfile()">
             <i class="pi pi-user"></i>
             <span>{{ commonLabels.Profile }}</span>
         </button>

@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.shared.setData('Dashboard');
         this.dashboardLabels = DashboardLabelConstants;
         this.getDashboardData();
     }

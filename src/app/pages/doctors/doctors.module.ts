@@ -12,10 +12,14 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { BlockUIModule } from 'primeng/blockui';
+import { TagModule } from 'primeng/tag';
+import { ConfirmationModalComponent } from 'src/app/components/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
-    declarations: [DoctorsComponent, DoctorProfileComponent],
+    declarations: [
+        DoctorsComponent,
+        DoctorProfileComponent
+    ],
     imports: [
         CommonModule,
         DoctorsRoutingModule,
@@ -26,8 +30,8 @@ import { BlockUIModule } from 'primeng/blockui';
         InputSwitchModule,
         ToastModule,
         ProgressSpinnerModule,
-        BlockUIModule,
+        TagModule
     ],
-    providers: [MessageService],
+    providers: [MessageService]
 })
 export class DoctorsModule {}

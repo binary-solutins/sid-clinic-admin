@@ -1,5 +1,123 @@
+<p-toast />
 <div class="card page-content">
     <div class="main-content">
-        
+        <div class="flex justify-content-between">
+            <h3>{{ blogConstants.Blogs }}</h3>
+            <p-button
+                class="primary"
+                icon="pi pi-plus"
+                label="New Blog"
+                (click)="newBlog()"
+                styleClass="rounded-2"
+            />
+        </div>
+
+        <p-progressSpinner
+            *ngIf="loading"
+            styleClass="overlay-spinner"
+        ></p-progressSpinner>
+
+        <p-table
+            *ngIf="!loading && blogs.length > 0"
+            [value]="blogs"
+            [paginator]="true"
+            [rows]="5"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            [rowsPerPageOptions]="rowsPerPageOptions"
+            styleClass="p-datatable-gridlines"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="blog.title" style="width: 25%">
+                        {{ blogConstants.Title }}
+                        <p-sortIcon field="blog.title" />
+                    </th>
+                    <th pSortableColumn="blog.category" style="width: 15%">
+                        {{ blogConstants.Category }}
+                        <p-sortIcon field="blog.category" />
+                    </th>
+                    <th pSortableColumn="blog.status" style="width: 15%">
+                        {{ labelConstants.Status }}
+                        <p-sortIcon field="blog.status" />
+                    </th>
+                    <th pSortableColumn="blog.is_active" style="width: 20%">
+                        {{ labelConstants.Active }}
+                        <p-sortIcon field="blog.is_active" />
+                    </th>
+                    <th pSortableColumn="blog.is_featured" style="width: 15%">
+                        {{ blogConstants.IsFeatured }}
+                        <p-sortIcon field="blog.is_featured" />
+                    </th>
+                    <th style="width: 10%">
+                        {{ labelConstants.Actions }}
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-blog>
+                <tr>
+                    <td
+                        class="font-semibold underline cursor-pointer"
+                        (click)="viewBlog(blog.id)"
+                    >
+                        {{ blog.title }}
+                    </td>
+                    <td>
+                        {{ blog.category }}
+                    </td>
+                    <td>
+                        {{ blog.status }}
+                    </td>
+                    <td>
+                        <p-tag
+                            value="Active"
+                            severity="blog.is_active ? '' : 'bg-secondary'"
+                            [styleClass]="blog.is_active ? '' : 'bg-secondary'"
+                            (click)="changeActiveStatus(blog)"
+                        />
+                        <p-tag
+                            class="ml-1"
+                            severity="blog.is_active ? 'bg-secondary' : ''"
+                            value="Suspend"
+                            [styleClass]="blog.is_active ? 'bg-secondary' : ''"
+                            (click)="changeActiveStatus(blog)"
+                        />
+                    </td>
+                    <td>
+                        <p-tag
+                            value="Yes"
+                            severity="blog.is_active ? '' : 'bg-secondary'"
+                            [styleClass]="blog.is_active ? '' : 'bg-secondary'"
+                            (click)="changeFeaturedStatus(blog)"
+                        />
+                        <p-tag
+                            class="ml-1"
+                            severity="blog.is_active ? 'bg-secondary' : ''"
+                            value="No"
+                            [styleClass]="blog.is_active ? 'bg-secondary' : ''"
+                            (click)="changeFeaturedStatus(blog)"
+                        />
+                    </td>
+                    <td>
+                        <i
+                            class="text-gray-600 bg-gray-200 border-round-3xl p-2 text-md mr-2 pi pi-pencil"
+                            (click)="editBlog(blog.id)"
+                        ></i>
+                        <i
+                            class="text-gray-600 bg-gray-200 border-round-3xl p-2 text-md pi pi-trash"
+                            (click)="deleteBlog(blog.id)"
+                        ></i>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [colSpan]="6" class="text-center mt-3 text-lg">
+                        {{ labelConstants.NoBlog }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>

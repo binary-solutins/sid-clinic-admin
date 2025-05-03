@@ -9,7 +9,7 @@ const routes: Routes = [
         component: DoctorsComponent,
     },
     {
-        path: 'doctor-profile/:id',
+        path: 'doctor-profile',
         component: DoctorProfileComponent,
     },
 ];

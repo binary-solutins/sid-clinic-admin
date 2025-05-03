@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Password } from 'primeng/password';
 import { ApiUrlHelper } from 'src/app/common/api-url-helper';
 import { CommonErrorMessages } from 'src/app/constants/ErrorMessages';
 import { AuthLabelConstants } from 'src/app/constants/LabelConstants';
-import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import { SharedService } from 'src/app/services/shared/shared.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
@@ -35,18 +34,23 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private readonly fb: FormBuilder,
-        public layoutService: LayoutService,
         private readonly commonService: CommonService,
         private readonly api: ApiUrlHelper,
         private readonly router: Router,
         private readonly messageService: MessageService,
-        private readonly storageService: StorageService
-    ) {}
+        private readonly storageService: StorageService,
+        private readonly shared: SharedService
+    ) {
+        this.loginForm();
+    }
 
     ngOnInit(): void {
-        this.loginForm();
+        this.shared.setData('Login');
         this.labelConstants = AuthLabelConstants;
         this.commonErrors = CommonErrorMessages;
+        if (localStorage.getItem('JWTToken')) {
+            this.router.navigate(['/dashboard']);
+        }
     }
 
     loginForm() {
@@ -75,7 +79,7 @@ export class LoginComponent implements OnInit {
                 .doPost(api, this.LoginForm.value)
                 .pipe()
                 .subscribe({
-                    next: (response) => {                        
+                    next: (response) => {
                         if (response.code == 200) {
                             this.LoginForm.reset();
                             this.router.navigate(['/dashboard']);
@@ -88,7 +92,10 @@ export class LoginComponent implements OnInit {
                                 'JWTToken',
                                 response.data.token
                             );
-                            this.storageService.setValue('role', response.data.role);
+                            this.storageService.setValue(
+                                'role',
+                                response.data.role
+                            );
                         }
                     },
                     error: (loginError: any) => {
