@@ -19,6 +19,7 @@ import { AppService } from '../app/app.service';
 import { environment } from 'src/environments/environment.development';
 import { ApiResponse } from 'src/app/model/commonModel';
 import { FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
     providedIn: 'root',
@@ -49,7 +50,8 @@ export class CommonService {
     isSystemAlert: boolean = false;
     constructor(
         private readonly appService: AppService,
-        private readonly http: HttpClient
+        private readonly http: HttpClient,
+        private readonly messageService: MessageService
     ) {}
 
     doGet(apiUrl: String): Observable<ApiResponse> {
@@ -192,26 +194,46 @@ export class CommonService {
     }
 
     checkAuthorize(error: any) {
+        const token = localStorage.getItem('JWTToken');
         if (error.status == HttpStatusCode.Unauthorized) {
             if (this.IsError == false) {
                 this.IsError = true;
                 //this.toster.error(ErrorMessageConstants.Message);
             }
             //this.spinner.hide();
-            this.appService.logout();
+            if (!token) {
+                this.appService.logout();
+            } else {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Unauthorized access',
+                });
+            }
             //this.dialog.closeAll();
         } else if (error.status == HttpStatusCode.Forbidden) {
             if (this.IsError == false) {
                 this.IsError = true;
-                ///this.toster.error(TokenConstants.Session_Expired);
-                localStorage.clear();
             }
-            this.appService.logout();
+            if (!token) {
+                this.appService.logout();
+            } else {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Unauthorized access',
+                });
+            }
             //this.spinner.hide();
             //this.dialog.closeAll();
         } else if (error.status === HttpStatusCode.InternalServerError) {
             //this.toster.error(ErrorMessageConstants.Message);
-            this.appService.logout();
+            if (!token) {
+                this.appService.logout();
+            } else {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Unauthorized access',
+                });
+            }
             //this.spinner.hide();
             //this.dialog.closeAll();
         }

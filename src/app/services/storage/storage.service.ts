@@ -22,11 +22,11 @@ export class StorageService {
 }
 
 export class StorageKey {
-  public static readonly userId = 'userId'
-  public static readonly currentUser = 'currentUser';
-  public static readonly userfullname = 'userfullname';
-  public static readonly authToken = 'JWTToken';
-  public static readonly expireDate:'expireDate';
-  public static readonly currentUserId = 'currentUserId';
-  public static readonly adminProfilePicture = 'adminProfilePicture';
+    public static readonly userId = 'userId';
+    public static readonly currentUser = 'currentUser';
+    public static readonly userfullname = 'userfullname';
+    public static readonly authToken = 'JWTToken';
+    public static readonly expireDate = 'expireDate';
+    public static readonly currentUserId = 'currentUserId';
+    public static readonly adminProfilePicture = 'adminProfilePicture';
 }
