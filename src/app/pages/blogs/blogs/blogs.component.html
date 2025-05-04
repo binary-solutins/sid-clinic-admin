@@ -1,7 +1,7 @@
 <p-toast />
 <div class="card page-content">
     <div class="main-content">
-        <div class="flex justify-content-between">
+        <div class="sm:flex justify-content-between mb-4">
             <h3>{{ blogConstants.Blogs }}</h3>
             <p-button
                 class="primary"
@@ -16,6 +16,8 @@
             *ngIf="loading"
             styleClass="overlay-spinner"
         ></p-progressSpinner>
+
+        <p-confirmDialog />
 
         <p-table
             *ngIf="!loading && blogs.length > 0"
@@ -86,15 +88,19 @@
                     <td>
                         <p-tag
                             value="Yes"
-                            severity="blog.is_active ? '' : 'bg-secondary'"
-                            [styleClass]="blog.is_active ? '' : 'bg-secondary'"
+                            severity="blog.is_featured ? '' : 'bg-secondary'"
+                            [styleClass]="
+                                blog.is_featured ? '' : 'bg-secondary'
+                            "
                             (click)="changeFeaturedStatus(blog)"
                         />
                         <p-tag
                             class="ml-1"
-                            severity="blog.is_active ? 'bg-secondary' : ''"
+                            severity="blog.is_featured ? 'bg-secondary' : ''"
                             value="No"
-                            [styleClass]="blog.is_active ? 'bg-secondary' : ''"
+                            [styleClass]="
+                                blog.is_featured ? 'bg-secondary' : ''
+                            "
                             (click)="changeFeaturedStatus(blog)"
                         />
                     </td>
@@ -105,7 +111,7 @@
                         ></i>
                         <i
                             class="text-gray-600 bg-gray-200 border-round-3xl p-2 text-md pi pi-trash"
-                            (click)="deleteBlog(blog.id)"
+                            (click)="deleteBlog(blog)"
                         ></i>
                     </td>
                 </tr>

@@ -42,6 +42,8 @@
             styleClass="overlay-spinner"
         ></p-progressSpinner>
 
+        <p-confirmDialog />
+
         <p-table
             *ngIf="!loading"
             [value]="doctors"
@@ -158,7 +160,7 @@
                     <td>
                         <i
                             class="text-gray-600 bg-gray-200 border-round-3xl p-2 text-md mx-2 pi pi-trash"
-                            (click)="deleteDoctor(doctor.id)"
+                            (click)="deleteDoctor(doctor)"
                         ></i>
                     </td>
                 </tr>

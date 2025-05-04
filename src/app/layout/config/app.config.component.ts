@@ -9,8 +9,6 @@ import { MenuService } from '../menu/app.menu.service';
 export class AppConfigComponent {
     @Input() minimal: boolean = false;
 
-    scales: number[] = [12, 13, 14, 15, 16];
-
     constructor(
         public layoutService: LayoutService,
         public menuService: MenuService
@@ -21,16 +19,6 @@ export class AppConfigComponent {
     }
     set visible(_val: boolean) {
         this.layoutService.state.configSidebarVisible = _val;
-    }
-
-    get scale(): number {
-        return this.layoutService.config().scale;
-    }
-    set scale(_val: number) {
-        this.layoutService.config.update((config) => ({
-            ...config,
-            scale: _val,
-        }));
     }
 
     get menuMode(): string {
@@ -50,22 +38,13 @@ export class AppConfigComponent {
         this.layoutService.config().inputStyle = _val;
     }
 
-    get ripple(): boolean {
-        return this.layoutService.config().ripple;
-    }
-    set ripple(_val: boolean) {
-        this.layoutService.config.update((config) => ({
-            ...config,
-            ripple: _val,
-        }));
-    }
-
     set theme(val: string) {
         this.layoutService.config.update((config) => ({
             ...config,
             theme: val,
         }));
     }
+
     get theme(): string {
         return this.layoutService.config().theme;
     }
@@ -76,6 +55,7 @@ export class AppConfigComponent {
             colorScheme: val,
         }));
     }
+    
     get colorScheme(): string {
         return this.layoutService.config().colorScheme;
     }
@@ -87,13 +67,5 @@ export class AppConfigComponent {
     changeTheme(theme: string, colorScheme: string) {
         this.theme = theme;
         this.colorScheme = colorScheme;
-    }
-
-    decrementScale() {
-        this.scale--;
-    }
-
-    incrementScale() {
-        this.scale++;
     }
 }

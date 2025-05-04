@@ -1,20 +1,40 @@
 <p-toast></p-toast>
 <div class="page-content card">
     <div class="main-content">
-        <div class="sm:flex justify-content-between items-center gap-4 mb-4">
-            <div class="sm:flex gap-4 mb-3 sm:mb-0"></div>
-            <div class="flex gap-3">
+        <div
+            class="md:flex justify-content-between align-items-center gap-4 mb-4"
+        >
+            <h3>
+                {{ labelConstants.Users }}
+            </h3>
+            <div class="sm:flex gap-4">
                 <p-button
                     severity="secondary"
+                    label="Download Template"
+                    icon="pi pi-download"
+                    styleClass="rounded-2 mb-3 sm:mb-0"
+                    (click)="downloadTemplate()"
+                />
+                <button
+                    pButton
                     label="Import Users"
                     icon="pi pi-users"
-                    styleClass="rounded-2"
-                />
+                    class="mb-3 sm:mb-0 rounded-2 bg-bluegray-500 border-bluegray-500"
+                    (click)="fileInput.click()"
+                >
+                    <input
+                        #fileInput
+                        type="file"
+                        (change)="importUsers($event, fileInput)"
+                        accept=".xlsx, .xls"
+                        style="display: none"
+                    />
+                </button>
                 <p-button
                     severity="primary"
                     label="Add User"
                     icon="pi pi-plus"
-                    styleClass="rounded-2"
+                    styleClass="rounded-2 mb-3 sm:mb-0"
                 />
             </div>
         </div>

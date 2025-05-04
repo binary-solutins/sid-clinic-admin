@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiUrlHelper } from 'src/app/common/api-url-helper';
 import {
     BlogLabelConstants,
@@ -35,7 +35,8 @@ export class BlogsComponent implements OnInit {
         private readonly commonService: CommonService,
         private readonly api: ApiUrlHelper,
         private readonly messageService: MessageService,
-        private readonly shared: SharedService
+        private readonly shared: SharedService,
+        private readonly confirmationService: ConfirmationService
     ) {}
 
     ngOnInit() {
@@ -56,8 +57,8 @@ export class BlogsComponent implements OnInit {
             .pipe()
             .subscribe({
                 next: (res) => {
+                    this.loading = false;
                     if (res.code == 200) {
-                        this.loading = false;
                         this.blogs = res.data.blogs;
                     } else {
                         this.messageService.add({
@@ -65,7 +66,6 @@ export class BlogsComponent implements OnInit {
                             summary: res.message,
                             life: 3000,
                         });
-                        this.loading = false;
                     }
                 },
                 error: (err: any) => {
@@ -91,7 +91,55 @@ export class BlogsComponent implements OnInit {
         this.router.navigate([`/blogs/edit-blog/${blogId}`]);
     }
 
-    deleteBlog(id: any) {}
+    deleteBlog(blog: any) {
+        this.confirmationService.confirm({
+            target: event.target as EventTarget,
+            message: 'Do you want to delete this blog?',
+            header: `Delete ${blog.title}`,
+            icon: 'pi pi-info-circle',
+            acceptButtonStyleClass: 'p-button-danger p-button-text',
+            rejectButtonStyleClass: 'p-button-text p-button-text',
+            acceptIcon: 'none',
+            rejectIcon: 'none',
+
+            accept: () => {
+                this.loading = true;
+                let api = this.api.apiUrl.Blogs.DeleteBlog.replace(
+                    '{id}',
+                    blog.id
+                );
+                this.commonService.doDelete(api, blog.id).subscribe({
+                    next: (res) => {
+                        this.loading = false;
+                        if (res.code == 200) {
+                            this.messageService.add({
+                                severity: 'success',
+                                summary: 'Blog Deleted',
+                            });
+                            this.getBlogsList();
+                        } else {
+                            this.messageService.add({
+                                severity: 'error',
+                                summary: 'Error',
+                                detail: res.message,
+                            });
+                        }
+                    },
+                    error: (err: any) => {
+                        console.log(err);
+                        this.loading = false;
+                    },
+                });
+            },
+            reject: () => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Rejected',
+                    detail: 'You have rejected',
+                });
+            },
+        });
+    }
 
     onPageChange(event: PageEvent) {
         this.first = event.first;
@@ -99,12 +147,14 @@ export class BlogsComponent implements OnInit {
     }
 
     changeActiveStatus(blog: any) {
+        this.loading = true;
         let api = this.api.apiUrl.Blogs.UpdateBlogActiveStatus(blog.id);
         this.commonService
             .doPut(api, {})
             .pipe()
             .subscribe({
                 next: (res) => {
+                    this.loading = false;
                     if (res.code == 200) {
                         this.messageService.add({
                             severity: 'success',
@@ -120,17 +170,20 @@ export class BlogsComponent implements OnInit {
                 },
                 error: (err: any) => {
                     console.log(err);
+                    this.loading = false;
                 },
             });
     }
 
     changeFeaturedStatus(blog: any) {
+        this.loading = true;
         let api = this.api.apiUrl.Blogs.UpdateBlogFeaturedStatus(blog.id);
         this.commonService
             .doPut(api, {})
             .pipe()
             .subscribe({
                 next: (res) => {
+                    this.loading = false;
                     if (res.code == 200) {
                         this.messageService.add({
                             severity: 'success',
@@ -146,6 +199,7 @@ export class BlogsComponent implements OnInit {
                 },
                 error: (err: any) => {
                     console.log(err);
+                    this.loading = false;
                 },
             });
     }

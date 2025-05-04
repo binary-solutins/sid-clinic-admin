@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { SpinnerIcon } from 'primeng/icons/spinner';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiUrlHelper } from 'src/app/common/api-url-helper';
 import { CommonLabelConstants } from 'src/app/constants/LabelConstants';
-import { IDoctors } from 'src/app/model/commonModel';
 import { CommonService } from 'src/app/services/common/common.service';
 import { SharedService } from 'src/app/services/shared/shared.service';
 
@@ -28,7 +26,8 @@ export class DoctorsComponent {
         private readonly commonService: CommonService,
         private readonly router: Router,
         private readonly messageService: MessageService,
-        private readonly shared: SharedService
+        private readonly shared: SharedService,
+        private readonly confirmationService: ConfirmationService
     ) {}
 
     ngOnInit() {
@@ -147,7 +146,53 @@ export class DoctorsComponent {
         }
     }
 
-    deleteDoctor(id: any) {
-        
+    deleteDoctor(doctor: any) {
+        this.confirmationService.confirm({
+            target: event.target as EventTarget,
+            message: 'Do you want to delete this doctor account?',
+            header: `Delete ${doctor.User.name}`,
+            icon: 'pi pi-info-circle',
+            acceptButtonStyleClass: 'p-button-danger p-button-text',
+            rejectButtonStyleClass: 'p-button-text p-button-text',
+            acceptIcon: 'none',
+            rejectIcon: 'none',
+
+            accept: () => {
+                this.loading = true;
+                let api = this.api.apiUrl.Doctors.DeleteDoctor.replace(
+                    '{id}',
+                    doctor.id
+                );
+                this.commonService.doDelete(api, doctor.id).subscribe({
+                    next: (res) => {
+                        this.loading = false;
+                        if (res.code == 200) {
+                            this.messageService.add({
+                                severity: 'success',
+                                summary: 'Doctor account Deleted',
+                            });
+                            this.getDoctorsList();
+                        } else {
+                            this.messageService.add({
+                                severity: 'error',
+                                summary: 'Error',
+                                detail: res.message,
+                            });
+                        }
+                    },
+                    error: (err: any) => {
+                        console.log(err);
+                        this.loading = false;
+                    },
+                });
+            },
+            reject: () => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Rejected',
+                    detail: 'You have rejected',
+                });
+            },
+        });
     }
 }

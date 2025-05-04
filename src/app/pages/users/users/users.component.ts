@@ -58,6 +58,61 @@ export class UsersComponent implements OnInit {
         });
     }
 
+    downloadTemplate() {
+        const link = document.createElement('a');
+        link.href = 'assets/templates/Users_Template.xlsx';
+        link.download = 'Users_Template.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    importUsers(event: any, fileInput: HTMLInputElement) {
+        const file = event.target.files[0];
+        if (file) {
+            const allowedExtensions = ['.xls', '.xlsx'];
+            const fileName = file.name.toLowerCase();
+            const isValidExtension = allowedExtensions.some((ext) =>
+                fileName.endsWith(ext)
+            );
+            if (!isValidExtension) {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Only Excel files (.xls, .xlsx) are allowed.',
+                });
+                fileInput.value = '';
+                return;
+            }
+            let api = this.api.apiUrl.Users.ImportUsers;
+            const formData = new FormData();
+            formData.append('file', file);
+            this.loading = true;
+            this.commonService.doPost(api, formData).subscribe({
+                next: (response) => {
+                    this.loading = false;
+                    fileInput.value = '';
+                    if (response.code == 200) {
+                        this.getUsersList();
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: response.message,
+                        });
+                    } else {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: response.message,
+                        });
+                    }
+                },
+                error: (err) => {
+                    this.loading = false;
+                    console.error(err);
+                    fileInput.value = '';
+                },
+            });
+        }
+    }
+
     handleImageError(event: any) {
         if (event.target.src.indexOf('user-default.png') === -1) {
             event.target.src = '../../../../assets/images/user-default.png';
@@ -68,5 +123,7 @@ export class UsersComponent implements OnInit {
 
     showUserProfile(id: any) {}
 
-    deleteUser(id: any) {}
+    deleteUser(id: any) {
+        
+    }
 }

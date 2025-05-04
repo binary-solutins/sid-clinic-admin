@@ -11,7 +11,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { PaginatorModule } from 'primeng/paginator';
 import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
@@ -19,7 +19,7 @@ import { TagModule } from 'primeng/tag';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { BlogDetailsComponent } from './blog-details/blog-details.component';
 import { FieldsetModule } from 'primeng/fieldset';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
     declarations: [BlogsComponent, AddEditBlogComponent, BlogDetailsComponent],
     imports: [
@@ -40,7 +40,8 @@ import { FieldsetModule } from 'primeng/fieldset';
         TagModule,
         SelectButtonModule,
         FieldsetModule,
+        ConfirmDialogModule,
     ],
-    providers: [MessageService],
+    providers: [MessageService, ConfirmationService],
 })
 export class BlogsModule {}

@@ -9,17 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DoctorProfileComponent } from './doctor-profile/doctor-profile.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TagModule } from 'primeng/tag';
-import { ConfirmationModalComponent } from 'src/app/components/confirmation-modal/confirmation-modal.component';
 import { FieldsetModule } from 'primeng/fieldset';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
-    declarations: [
-        DoctorsComponent,
-        DoctorProfileComponent
-    ],
+    declarations: [DoctorsComponent, DoctorProfileComponent],
     imports: [
         CommonModule,
         DoctorsRoutingModule,
@@ -32,8 +29,9 @@ import { FieldsetModule } from 'primeng/fieldset';
         ProgressSpinnerModule,
         TagModule,
         FieldsetModule,
-        CardModule
+        CardModule,
+        ConfirmDialogModule
     ],
-    providers: [MessageService]
+    providers: [MessageService, ConfirmationService],
 })
 export class DoctorsModule {}

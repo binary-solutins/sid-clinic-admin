@@ -17,12 +17,11 @@ import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { HTTPListener, HTTPStatus } from './interceptor/HTTPListener';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
-import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
@@ -30,17 +29,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         AppComponent,
         NotfoundComponent,
         LoginComponent,
-        ForgotPasswordComponent,
-        ConfirmationModalComponent,
+        ForgotPasswordComponent
     ],
     imports: [
         AppRoutingModule,
         AppLayoutModule,
         ReactiveFormsModule,
         ToastModule,
-        ConfirmDialogModule,
+        ConfirmDialogModule
     ],
-    exports: [ConfirmationModalComponent],
     providers: [
         {
             provide: LocationStrategy,
@@ -60,6 +57,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         PhotoService,
         ProductService,
         MessageService,
+        ConfirmationService
     ],
     bootstrap: [AppComponent],
 })

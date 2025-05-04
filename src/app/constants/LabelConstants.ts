@@ -58,6 +58,7 @@ export const CommonLabelConstants = {
     ClinicAddress: 'Clinic Address',
     Degree: 'Degree',
     ViewDegree: 'View Degree',
+    Users: 'Users'
 };
 
 export const AuthLabelConstants = {
