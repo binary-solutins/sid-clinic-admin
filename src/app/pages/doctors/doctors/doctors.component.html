@@ -33,6 +33,7 @@
                     severity="primary"
                     label="Add Doctor"
                     icon="pi pi-plus"
+                    (click)="addDoctor()"
                 />
             </div>
         </div>
@@ -73,13 +74,14 @@
                             </div>
                             <p-columnFilter
                                 type="text"
-                                field="doctor.city"
+                                field="city"
                                 display="menu"
                                 [showOperator]="false"
                                 [showMatchModes]="false"
                                 [showAddButton]="false"
                                 placeholder="Search by city"
                                 class="filter-align-right"
+                                (onFilter)="filterByCity($event)"
                             ></p-columnFilter>
                         </div>
                     </th>

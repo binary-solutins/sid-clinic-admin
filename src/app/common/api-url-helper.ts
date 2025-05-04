@@ -16,6 +16,7 @@ export class ApiUrlHelper {
         },
         Doctors: {
             GetDoctorsList: 'doctors/all',
+            GetDoctorsListByCity: (city: string) => `doctors/city/${city}`,
             UpdateDoctorStatus: (id: number | string) =>
                 `doctors/approve/${id}`,
             GetApprovedDoctors: 'doctors/approved',
@@ -23,14 +24,14 @@ export class ApiUrlHelper {
             GetDoctorProfile: (id: number | string) => `doctors/details/${id}`,
             UpdateDoctorActiveStatus: (id: number | string) =>
                 `doctors/toggle-status/${id}`,
-            DeleteDoctor: 'doctor'
+            DeleteDoctor: 'doctor',
         },
         Users: {
             GetUsersList: 'users/all',
             AddUser: 'user',
             EditUser: '',
             DeleteUser: '',
-            ImportUsers: 'users/import'
+            ImportUsers: 'users/import',
         },
         Blogs: {
             GetAllBlogs: 'blogs/blogsAdmin',
@@ -42,7 +43,7 @@ export class ApiUrlHelper {
                 `blogs/${id}/toggle-status`,
             UpdateBlogFeaturedStatus: (id: number | string) =>
                 `blogs/${id}/toggle-featured`,
-            DeleteBlog: 'blogs/{id}'
+            DeleteBlog: 'blogs/{id}',
         },
     };
 }

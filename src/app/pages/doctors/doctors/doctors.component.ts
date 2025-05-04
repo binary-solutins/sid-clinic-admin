@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import {
+    ConfirmationService,
+    FilterMetadata,
+    MessageService,
+} from 'primeng/api';
 import { ApiUrlHelper } from 'src/app/common/api-url-helper';
 import { CommonLabelConstants } from 'src/app/constants/LabelConstants';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -86,6 +90,37 @@ export class DoctorsComponent {
                     this.loading = false;
                 },
             });
+    }
+
+    filterByCity(event: { filteredValue: any; filter: FilterMetadata }) {
+        this.loading = true;
+        let api = this.api.apiUrl.Doctors.GetDoctorsListByCity(
+            event.filter?.value
+        );
+        this.commonService
+            .doGet(api)
+            .pipe()
+            .subscribe({
+                next: (res) => {
+                    this.loading = false;
+                    if (res.code == 200) {
+                        this.doctors = res.data;
+                    } else {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: res.message,
+                        });
+                    }
+                },
+                error: (err: any) => {
+                    console.log(err);
+                    this.loading = false;
+                },
+            });
+    }
+
+    addDoctor() {
+        this.router.navigate(['/doctors/add-doctor']);
     }
 
     updateDoctorStatus(doctor: any) {
